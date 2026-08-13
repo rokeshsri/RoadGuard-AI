@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        RoadGuard AI | Reports
+    </title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #07100d;
+
+            color: #f4f7f5;
+
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+
+            height: 76px;
+
+            padding: 0 7%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+
+        }
+
+
+        .logo {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+        }
+
+
+        .logo span {
+
+            color: #69f0ae;
+
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 30px;
+
+        }
+
+
+        .nav-links a {
+
+            color: #9aa7a0;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+        }
+
+
+        .nav-links a:hover,
+        .nav-links a.active {
+
+            color: #69f0ae;
+
+        }
+
+
+        .inspect-btn {
+
+            background: #69f0ae;
+
+            color: #07100d;
+
+            text-decoration: none;
+
+            padding: 11px 18px;
+
+            border-radius: 7px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+
+            width: 86%;
+
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 45px 0 70px;
+
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            color: #718079;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .back:hover {
+
+            color: #69f0ae;
+
+        }
+
+
+        .page-label {
+
+            color: #69f0ae;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .page-header h1 {
+
+            font-size: 40px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .page-header p {
+
+            color: #829089;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* ================= STATS ================= */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-top: 35px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .stat-card {
+
+            background: #101a16;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 14px;
+
+            padding: 23px;
+
+        }
+
+
+        .stat-title {
+
+            color: #75827b;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .stat-number {
+
+            font-size: 32px;
+
+            font-weight: 800;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .stat-info {
+
+            color: #69f0ae;
+
+            font-size: 11px;
+
+        }
+
+
+        /* ================= PANEL ================= */
+
+        .panel {
+
+            background: #101a16;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .panel-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .panel-header h2 {
+
+            font-size: 19px;
+
+        }
+
+
+        .panel-header span {
+
+            color: #68766e;
+
+            font-size: 11px;
+
+        }
+
+
+        /* ================= REPORT ================= */
+
+        .report {
+
+            border:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            background: #0c1511;
+
+            border-radius: 11px;
+
+            padding: 20px;
+
+            margin-bottom: 20px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .report:hover {
+
+            border-color:
+                rgba(105,240,174,0.25);
+
+        }
+
+
+        .report-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .report-id {
+
+            color: #69f0ae;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+
+        .report-date {
+
+            color: #68766e;
+
+            font-size: 11px;
+
+        }
+
+
+        /* ================= REPORT IMAGES ================= */
+
+        .report-images {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .report-image {
+
+            background: #080f0c;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            border-radius: 10px;
+
+            padding: 12px;
+
+        }
+
+
+        .report-image-title {
+
+            color: #68766e;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .report-image img {
+
+            width: 100%;
+
+            height: 250px;
+
+            object-fit: contain;
+
+            display: block;
+
+            border-radius: 7px;
+
+            background: #050a08;
+
+        }
+
+
+        .image-unavailable {
+
+            display: none;
+
+            height: 250px;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #68766e;
+
+            font-size: 12px;
+
+            text-align: center;
+
+        }
+
+
+        /* ================= REPORT DETAILS ================= */
+
+        .report-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                2fr 1fr 1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+
+        .report-item label {
+
+            display: block;
+
+            color: #65736b;
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .report-item strong {
+
+            color: #e5ebe7;
+
+            font-size: 13px;
+
+        }
+
+
+        .confidence {
+
+            color: #69f0ae !important;
+
+        }
+
+
+        /* ================= BADGES ================= */
+
+        .badge {
+
+            display: inline-block;
+
+            padding: 6px 9px;
+
+            border-radius: 6px;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+        }
+
+
+        .moderate {
+
+            color: #f2d66b;
+
+            background:
+                rgba(242,214,107,0.09);
+
+        }
+
+
+        .high {
+
+            color: #ff9c55;
+
+            background:
+                rgba(255,156,85,0.09);
+
+        }
+
+
+        .critical {
+
+            color: #ff6868;
+
+            background:
+                rgba(255,104,104,0.09);
+
+        }
+
+
+        .medium {
+
+            color: #f2d66b;
+
+            background:
+                rgba(242,214,107,0.09);
+
+        }
+
+
+        .priority-high {
+
+            color: #ff6868;
+
+            background:
+                rgba(255,104,104,0.09);
+
+        }
+
+
+        .priority-critical {
+
+            color: #ff6868;
+
+            background:
+                rgba(255,104,104,0.09);
+
+        }
+
+
+        .unknown {
+
+            color: #a0aaa5;
+
+            background:
+                rgba(255,255,255,0.06);
+
+        }
+
+
+        /* ================= RECOMMENDATION ================= */
+
+        .recommendation {
+
+            margin-top: 18px;
+
+            padding: 13px 15px;
+
+            background:
+                rgba(105,240,174,0.035);
+
+            border-left:
+                2px solid #69f0ae;
+
+            border-radius: 6px;
+
+        }
+
+
+        .recommendation-title {
+
+            color: #69f0ae;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .recommendation p {
+
+            color: #89958e;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 65px 20px;
+
+        }
+
+
+        .empty-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .empty h3 {
+
+            font-size: 19px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .empty p {
+
+            color: #718079;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .empty a {
+
+            display: inline-block;
+
+            background: #69f0ae;
+
+            color: #07100d;
+
+            text-decoration: none;
+
+            padding: 12px 20px;
+
+            border-radius: 7px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            padding: 28px;
+
+            text-align: center;
+
+            color: #68756e;
+
+            font-size: 11px;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+
+                display: none;
+
+            }
+
+
+            .stats {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+
+            .report-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .report-images {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .container {
+
+                width: 92%;
+
+            }
+
+
+            .stats {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .report-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .inspect-btn {
+
+                display: none;
+
+            }
+
+
+            .page-header h1 {
+
+                font-size: 30px;
+
+            }
+
+
+            .report-image img {
+
+                height: 200px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <a href="/" class="logo">
+
+        ◈ RoadGuard <span>AI</span>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/detect">
+            AI Inspection
+        </a>
+
+        <a href="/reports" class="active">
+            Reports
+        </a>
+
+        <a href="/#about">
+            About
+        </a>
+
+    </div>
+
+
+    <a
+        href="/detect"
+        class="inspect-btn"
+    >
+        + New Inspection
+    </a>
+
+</nav>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <a
+        href="/"
+        class="back"
+    >
+        ← Home
+    </a>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="page-header">
+
+        <div class="page-label">
+
+            ROAD INTELLIGENCE CENTER
+
+        </div>
+
+
+        <h1>
+
+            Inspection Reports
+
+        </h1>
+
+
+        <p>
+
+            Real-time history of road damage
+            detected by the RoadGuard AI model.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+
+                Total Inspections
+
+            </div>
+
+
+            <div class="stat-number">
+
+                {{ total_inspections }}
+
+            </div>
+
+
+            <div class="stat-info">
+
+                Images analyzed
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+
+                Damages Detected
+
+            </div>
+
+
+            <div class="stat-number">
+
+                {{ total_damages }}
+
+            </div>
+
+
+            <div class="stat-info">
+
+                AI detections
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+
+                Moderate
+
+            </div>
+
+
+            <div class="stat-number">
+
+                {{ moderate_count }}
+
+            </div>
+
+
+            <div class="stat-info">
+
+                Needs monitoring
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+
+                High / Critical
+
+            </div>
+
+
+            <div class="stat-number">
+
+                {{ high_count + critical_count }}
+
+            </div>
+
+
+            <div class="stat-info">
+
+                Priority repairs
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ================= REPORT PANEL ================= -->
+
+    <section class="panel">
+
+
+        <div class="panel-header">
+
+            <h2>
+
+                Detection History
+
+            </h2>
+
+
+            <span>
+
+                Actual AI results
+
+            </span>
+
+        </div>
+
+
+
+        <!-- ================= REPORTS ================= -->
+
+        {% if reports %}
+
+
+            {% for report in reports %}
+
+
+            <div class="report">
+
+
+                <!-- ================= REPORT HEADER ================= -->
+
+                <div class="report-top">
+
+
+                    <div class="report-id">
+
+                        {{ report.id }}
+
+                    </div>
+
+
+                    <div class="report-date">
+
+                        {{ report.date }}
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================= IMAGES ================= -->
+
+                <div class="report-images">
+
+
+                    <!-- ORIGINAL IMAGE -->
+
+                    <div class="report-image">
+
+
+                        <div class="report-image-title">
+
+                            ORIGINAL IMAGE
+
+                        </div>
+
+
+                        {% if report.original_image %}
+
+
+                        <img
+                            src="{{ report.original_image }}"
+                            alt="Original road image"
+                            onerror="
+                                this.style.display='none';
+                                this.nextElementSibling.style.display='flex';
+                            "
+                        >
+
+
+                        <div class="image-unavailable">
+
+                            Image not available
+
+                        </div>
+
+
+                        {% else %}
+
+
+                        <div
+                            class="image-unavailable"
+                            style="display:flex;"
+                        >
+
+                            Image not available
+
+                        </div>
+
+
+                        {% endif %}
+
+
+                    </div>
+
+
+
+                    <!-- AI DETECTION IMAGE -->
+
+                    <div class="report-image">
+
+
+                        <div class="report-image-title">
+
+                            AI DETECTION
+
+                        </div>
+
+
+                        {% if report.result_image %}
+
+
+                        <img
+                            src="{{ report.result_image }}"
+                            alt="AI detection result"
+                            onerror="
+                                this.style.display='none';
+                                this.nextElementSibling.style.display='flex';
+                            "
+                        >
+
+
+                        <div class="image-unavailable">
+
+                            Image not available
+
+                        </div>
+
+
+                        {% else %}
+
+
+                        <div
+                            class="image-unavailable"
+                            style="display:flex;"
+                        >
+
+                            Image not available
+
+                        </div>
+
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================= REPORT DETAILS ================= -->
+
+                <div class="report-grid">
+
+
+                    <!-- DAMAGE -->
+
+                    <div class="report-item">
+
+                        <label>
+
+                            Detected Damage
+
+                        </label>
+
+
+                        <strong>
+
+                            {{ report.damage }}
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- CONFIDENCE -->
+
+                    <div class="report-item">
+
+                        <label>
+
+                            Confidence
+
+                        </label>
+
+
+                        <strong class="confidence">
+
+                            {{ report.confidence }}%
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- SEVERITY -->
+
+                    <div class="report-item">
+
+                        <label>
+
+                            Severity
+
+                        </label>
+
+
+                        {% if report.severity == "Critical" %}
+
+
+                        <span class="badge critical">
+
+                            🔴 Critical
+
+                        </span>
+
+
+                        {% elif report.severity == "High" %}
+
+
+                        <span class="badge high">
+
+                            🟠 High
+
+                        </span>
+
+
+                        {% elif report.severity == "Moderate" %}
+
+
+                        <span class="badge moderate">
+
+                            🟡 Moderate
+
+                        </span>
+
+
+                        {% else %}
+
+
+                        <span class="badge unknown">
+
+                            {{ report.severity }}
+
+                        </span>
+
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- PRIORITY -->
+
+                    <div class="report-item">
+
+                        <label>
+
+                            Priority
+
+                        </label>
+
+
+                        {% if report.priority == "Critical" %}
+
+
+                        <span class="badge priority-critical">
+
+                            Critical
+
+                        </span>
+
+
+                        {% elif report.priority == "High" %}
+
+
+                        <span class="badge priority-high">
+
+                            High
+
+                        </span>
+
+
+                        {% elif report.priority == "Medium" %}
+
+
+                        <span class="badge medium">
+
+                            Medium
+
+                        </span>
+
+
+                        {% else %}
+
+
+                        <span class="badge unknown">
+
+                            {{ report.priority }}
+
+                        </span>
+
+
+                        {% endif %}
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================= RECOMMENDATION ================= -->
+
+                <div class="recommendation">
+
+
+                    <div class="recommendation-title">
+
+                        RECOMMENDED ACTION
+
+                    </div>
+
+
+                    <p>
+
+                        {{ report.recommendation }}
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+        <!-- ================= EMPTY ================= -->
+
+        <div class="empty">
+
+
+            <div class="empty-icon">
+
+                📊
+
+            </div>
+
+
+            <h3>
+
+                No inspections yet
+
+            </h3>
+
+
+            <p>
+
+                Upload a road image from the
+                AI Inspection page to create
+                your first report.
+
+            </p>
+
+
+            <a href="/detect">
+
+                Start AI Inspection →
+
+            </a>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    RoadGuard AI · AI-powered road damage inspection
+
+</footer>
+
+
+</body>
+
+</html>
