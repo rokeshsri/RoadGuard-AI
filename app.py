@@ -13,7 +13,7 @@ app = Flask(__name__)
 # YOLO MODEL
 # ==================================================
 
-model = YOLO("runs/detect/train-2/weights/best.pt")
+model = YOLO("best.pt")
 
 
 # ==================================================
