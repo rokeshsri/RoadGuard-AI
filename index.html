@@ -1,0 +1,1349 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RoadGuard AI | Road Intelligence</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #07100d;
+            color: #f4f7f5;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 76px;
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: #07100d;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #69f0ae;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #a4b0aa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #69f0ae;
+        }
+
+        .nav-button {
+            background: #69f0ae;
+            color: #07100d;
+
+            padding: 11px 18px;
+            border-radius: 7px;
+
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: 0.25s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(105,240,174,0.15);
+        }
+
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 86%;
+            max-width: 1250px;
+            margin: auto;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 560px;
+
+            display: grid;
+
+            grid-template-columns: 1.05fr 0.95fr;
+
+            gap: 65px;
+
+            align-items: center;
+
+            padding: 75px 0 65px;
+        }
+
+        .tag {
+            color: #69f0ae;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: 61px;
+
+            line-height: 1.08;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #69f0ae;
+        }
+
+        .hero p {
+            color: #98a59f;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            max-width: 620px;
+
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+        }
+
+        .primary-btn {
+            display: inline-block;
+
+            padding: 15px 24px;
+
+            background: #69f0ae;
+
+            color: #07100d;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: 0.25s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 30px
+                rgba(105,240,174,0.18);
+        }
+
+        .secondary-btn {
+            display: inline-block;
+
+            padding: 15px 24px;
+
+            background: transparent;
+
+            color: #dce5df;
+
+            border: 1px solid #34433c;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: 0.25s;
+        }
+
+        .secondary-btn:hover {
+            border-color: #69f0ae;
+            color: #69f0ae;
+        }
+
+
+        /* ================= ROAD SCAN CARD ================= */
+
+        .road-card {
+            background: #101a16;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 20px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0,0,0,0.3);
+
+            overflow: hidden;
+        }
+
+        .road-card-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 3px 3px 16px;
+        }
+
+        .road-card-title {
+            color: #829089;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+        }
+
+        .live {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #69f0ae;
+
+            font-size: 9px;
+
+            font-weight: 700;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+
+            background: #69f0ae;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 10px
+                rgba(105,240,174,0.8);
+        }
+
+
+        /* ================= ROAD VISUAL ================= */
+
+        .road-view {
+            height: 350px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    165deg,
+                    #26322e,
+                    #161e1b 48%,
+                    #090f0c
+                );
+        }
+
+        .road-surface {
+            position: absolute;
+
+            width: 88%;
+            height: 125%;
+
+            left: 6%;
+            top: -10%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    #343c39 17%,
+                    #252d2a 50%,
+                    #343c39 83%,
+                    transparent 100%
+                );
+
+            clip-path:
+                polygon(
+                    33% 0,
+                    67% 0,
+                    100% 100%,
+                    0 100%
+                );
+        }
+
+        .road-surface::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            opacity: 0.25;
+
+            background:
+                repeating-linear-gradient(
+                    95deg,
+                    transparent,
+                    transparent 17px,
+                    rgba(255,255,255,0.04) 18px,
+                    transparent 20px
+                );
+        }
+
+
+        /* ================= ROAD MARKINGS ================= */
+
+        .lane {
+            position: absolute;
+
+            width: 5px;
+
+            height: 70px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            background:
+                rgba(255,255,255,0.45);
+
+            border-radius: 5px;
+        }
+
+        .lane.one {
+            top: 55px;
+        }
+
+        .lane.two {
+            top: 175px;
+        }
+
+        .lane.three {
+            top: 295px;
+        }
+
+
+        /* ================= CAR ================= */
+
+        .car {
+            position: absolute;
+
+            left: 50%;
+
+            bottom: 45px;
+
+            transform: translateX(-50%);
+
+            font-size: 43px;
+
+            filter:
+                drop-shadow(
+                    0 10px 10px
+                    rgba(0,0,0,0.55)
+                );
+
+            z-index: 5;
+        }
+
+
+        /* ================= CRACKS ================= */
+
+        .crack {
+            position: absolute;
+
+            height: 4px;
+
+            background: #69f0ae;
+
+            border-radius: 5px;
+
+            box-shadow:
+                0 0 9px
+                rgba(105,240,174,0.8);
+
+            z-index: 4;
+        }
+
+        .crack.one {
+            width: 70px;
+
+            left: 23%;
+
+            bottom: 115px;
+
+            transform: rotate(-18deg);
+        }
+
+        .crack.two {
+            width: 52px;
+
+            right: 19%;
+
+            bottom: 165px;
+
+            transform: rotate(24deg);
+        }
+
+        .crack.three {
+            width: 35px;
+
+            left: 40%;
+
+            bottom: 210px;
+
+            transform: rotate(-8deg);
+        }
+
+
+        /* ================= SCANNER ================= */
+
+        .scanner {
+            position: absolute;
+
+            left: 5%;
+            right: 5%;
+
+            height: 2px;
+
+            background: #69f0ae;
+
+            box-shadow:
+                0 0 12px #69f0ae,
+                0 0 25px rgba(105,240,174,0.55);
+
+            z-index: 8;
+
+            animation:
+                scan 3.2s
+                infinite
+                ease-in-out;
+        }
+
+        @keyframes scan {
+
+            0% {
+                top: 5%;
+                opacity: 0.2;
+            }
+
+            50% {
+                top: 91%;
+                opacity: 1;
+            }
+
+            100% {
+                top: 5%;
+                opacity: 0.2;
+            }
+        }
+
+
+        /* ================= AI BOXES ================= */
+
+        .ai-box {
+            position: absolute;
+
+            z-index: 10;
+
+            padding: 8px 10px;
+
+            background:
+                rgba(7,16,13,0.9);
+
+            border:
+                1px solid #69f0ae;
+
+            border-radius: 6px;
+
+            color: #69f0ae;
+
+            font-size: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            box-shadow:
+                0 0 20px
+                rgba(105,240,174,0.08);
+        }
+
+        .ai-box strong {
+            color: white;
+            font-size: 10px;
+        }
+
+        .ai-box.one {
+            left: 11%;
+            top: 34%;
+        }
+
+        .ai-box.two {
+            right: 9%;
+            top: 55%;
+        }
+
+
+        /* ================= CARD FOOTER ================= */
+
+        .road-info {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+            padding-top: 15px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.06);
+        }
+
+        .road-info div {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+        .road-info small {
+            color: #65736b;
+
+            font-size: 8px;
+
+            letter-spacing: 1px;
+        }
+
+        .road-info strong {
+            color: #dce5df;
+
+            font-size: 11px;
+        }
+
+        .road-info .green {
+            color: #69f0ae;
+        }
+
+
+        /* ================= STATS ================= */
+
+        .section-title {
+            margin-bottom: 25px;
+        }
+
+        .section-title span {
+            color: #69f0ae;
+
+            font-size: 11px;
+
+            letter-spacing: 1.5px;
+        }
+
+        .section-title h2 {
+            font-size: 30px;
+
+            margin-top: 8px;
+        }
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap: 18px;
+
+            margin-bottom: 70px;
+        }
+
+        .stat-card {
+            background: #101a16;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 13px;
+
+            padding: 25px;
+
+            transition: 0.25s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(105,240,174,0.25);
+        }
+
+        .stat-label {
+            color: #718079;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 14px;
+        }
+
+        .stat-number {
+            font-size: 34px;
+
+            font-weight: 800;
+
+            margin-bottom: 7px;
+        }
+
+        .stat-info {
+            color: #69f0ae;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= WORKFLOW ================= */
+
+        .how-section {
+            padding-bottom: 75px;
+        }
+
+        .steps {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 20px;
+        }
+
+        .step {
+            background: #101a16;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius: 15px;
+
+            padding: 28px;
+        }
+
+        .step-number {
+            color: #69f0ae;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 22px;
+        }
+
+        .step h3 {
+            font-size: 19px;
+
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #84918b;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= CTA ================= */
+
+        .cta {
+            margin-bottom: 80px;
+
+            padding: 45px;
+
+            border-radius: 17px;
+
+            background: #101a16;
+
+            border:
+                1px solid
+                rgba(105,240,174,0.15);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
+        }
+
+        .cta h2 {
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .cta p {
+            color: #89968f;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            border-top:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            padding: 30px;
+
+            text-align: center;
+
+            color: #68756e;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 950px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero h1 {
+                font-size: 50px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 550px) {
+
+            .container {
+                width: 92%;
+            }
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .nav-button {
+                display: none;
+            }
+
+            .hero {
+                padding: 50px 0;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .primary-btn,
+            .secondary-btn {
+                text-align: center;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .road-view {
+                height: 300px;
+            }
+
+            .cta {
+                padding: 30px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <a href="/" class="logo">
+        ◈ RoadGuard <span>AI</span>
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="/" class="active">
+            Home
+        </a>
+
+        <a href="/detect">
+            AI Inspection
+        </a>
+
+        <!-- FIXED: Reports now opens actual reports page -->
+        <a href="/reports">
+            Reports
+        </a>
+
+        <a href="#about">
+            About
+        </a>
+
+    </div>
+
+
+    <a href="/detect" class="nav-button">
+        Start Inspection
+    </a>
+
+</nav>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+
+        <div>
+
+            <div class="tag">
+                AI-POWERED ROAD INTELLIGENCE
+            </div>
+
+
+            <h1>
+                Smarter Roads.<br>
+
+                <span>
+                    Safer Journeys.
+                </span>
+            </h1>
+
+
+            <p>
+                RoadGuard AI uses computer vision
+                and deep learning to automatically
+                identify road cracks, potholes and
+                other surface damages from images.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="/detect"
+                    class="primary-btn"
+                >
+                    🔍 Inspect a Road
+                </a>
+
+
+                <a
+                    href="#how"
+                    class="secondary-btn"
+                >
+                    How It Works
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= ROAD SCAN CARD ================= -->
+
+        <div class="road-card">
+
+
+            <div class="road-card-header">
+
+                <div class="road-card-title">
+                    LIVE ROAD ANALYSIS
+                </div>
+
+
+                <div class="live">
+
+                    <span class="live-dot"></span>
+
+                    AI READY
+
+                </div>
+
+            </div>
+
+
+
+            <div class="road-view">
+
+
+                <div class="road-surface"></div>
+
+
+                <div class="lane one"></div>
+
+                <div class="lane two"></div>
+
+                <div class="lane three"></div>
+
+
+                <div class="crack one"></div>
+
+                <div class="crack two"></div>
+
+                <div class="crack three"></div>
+
+
+                <div class="car">
+                    🚗
+                </div>
+
+
+                <div class="scanner"></div>
+
+
+                <div class="ai-box one">
+
+                    <span>
+                        CRACK
+                    </span>
+
+                    <strong>
+                        92%
+                    </strong>
+
+                </div>
+
+
+                <div class="ai-box two">
+
+                    <span>
+                        DAMAGE
+                    </span>
+
+                    <strong>
+                        87%
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="road-info">
+
+
+                <div>
+
+                    <small>
+                        MODEL
+                    </small>
+
+                    <strong>
+                        YOLO AI
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        STATUS
+                    </small>
+
+                    <strong class="green">
+                        ANALYZING
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        MODE
+                    </small>
+
+                    <strong>
+                        VISION
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= STATS ================= -->
+
+    <section>
+
+
+        <div class="section-title">
+
+            <span>
+                SYSTEM OVERVIEW
+            </span>
+
+            <h2>
+                RoadGuard AI at a Glance
+            </h2>
+
+        </div>
+
+
+        <div class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Training Images
+                </div>
+
+                <div class="stat-number">
+                    17K+
+                </div>
+
+                <div class="stat-info">
+                    Dataset processed
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Damage Classes
+                </div>
+
+                <div class="stat-number">
+                    8
+                </div>
+
+                <div class="stat-info">
+                    Road damage types
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    AI Model
+                </div>
+
+                <div class="stat-number">
+                    YOLO
+                </div>
+
+                <div class="stat-info">
+                    Deep learning detection
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Analysis
+                </div>
+
+                <div class="stat-number">
+                    AI
+                </div>
+
+                <div class="stat-info">
+                    Automated inspection
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= HOW IT WORKS ================= -->
+
+    <section
+        class="how-section"
+        id="how"
+    >
+
+
+        <div class="section-title">
+
+            <span>
+                SIMPLE WORKFLOW
+            </span>
+
+            <h2>
+                How RoadGuard AI Works
+            </h2>
+
+        </div>
+
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    STEP 01
+                </div>
+
+                <h3>
+                    Upload Image
+                </h3>
+
+                <p>
+                    Upload a clear image of the road
+                    surface that needs inspection.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    STEP 02
+                </div>
+
+                <h3>
+                    AI Detection
+                </h3>
+
+                <p>
+                    The trained YOLO model analyzes
+                    the image and identifies visible damage.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    STEP 03
+                </div>
+
+                <h3>
+                    Risk Assessment
+                </h3>
+
+                <p>
+                    The system provides confidence,
+                    severity, priority and recommended action.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= ABOUT ================= -->
+
+    <section
+        id="about"
+        class="how-section"
+    >
+
+        <div class="section-title">
+
+            <span>
+                ABOUT ROADGUARD
+            </span>
+
+            <h2>
+                AI-Powered Road Inspection
+            </h2>
+
+        </div>
+
+        <div class="step">
+
+            <p>
+                RoadGuard AI is an AI-based road damage
+                inspection system designed to identify
+                cracks, potholes and other road surface
+                damages from images using a trained YOLO
+                computer vision model.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CTA ================= -->
+
+    <section class="cta">
+
+
+        <div>
+
+            <h2>
+                Ready to inspect a road?
+            </h2>
+
+            <p>
+                Upload an image and let RoadGuard AI
+                analyze it in seconds.
+            </p>
+
+        </div>
+
+
+        <a
+            href="/detect"
+            class="primary-btn"
+        >
+            Start AI Inspection →
+        </a>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    RoadGuard AI · AI-powered road damage inspection
+
+</footer>
+
+
+</body>
+
+</html>
+```

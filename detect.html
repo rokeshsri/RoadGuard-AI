@@ -1,0 +1,1215 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RoadGuard AI | AI Inspection</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #07100d;
+            color: #f4f7f5;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: #07100d;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #69f0ae;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #a4b0aa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #69f0ae;
+        }
+
+        .nav-button {
+            background: #69f0ae;
+            color: #07100d;
+
+            padding: 11px 18px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 86%;
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 70px 0 100px;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+        .page-tag {
+            color: #69f0ae;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 2px;
+        }
+
+        .page-header h1 {
+            font-size: 56px;
+
+            line-height: 1.15;
+
+            letter-spacing: -2px;
+
+            margin: 14px 0;
+        }
+
+        .page-header h1 span {
+            color: #69f0ae;
+        }
+
+        .page-header p {
+            color: #9aa8a1;
+
+            max-width: 720px;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= UPLOAD CARD ================= */
+
+        .upload-card {
+            background: #101a16;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 18px;
+
+            padding: 38px;
+
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        }
+
+        .upload-area {
+            border: 2px dashed #34433c;
+
+            border-radius: 14px;
+
+            min-height: 280px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 35px;
+
+            transition: 0.3s;
+
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #69f0ae;
+
+            background: rgba(105,240,174,0.025);
+        }
+
+        .upload-icon {
+            width: 70px;
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 16px;
+
+            background: rgba(105,240,174,0.08);
+
+            color: #69f0ae;
+
+            font-size: 32px;
+
+            margin-bottom: 20px;
+        }
+
+        .upload-area h2 {
+            font-size: 26px;
+
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            color: #8d9a94;
+
+            font-size: 15px;
+
+            line-height: 1.5;
+
+            margin-bottom: 22px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .choose-button {
+            display: inline-block;
+
+            padding: 12px 20px;
+
+            background: #69f0ae;
+
+            color: #07100d;
+
+            border-radius: 7px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .choose-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(105,240,174,0.15);
+        }
+
+        .file-name {
+            color: #69f0ae;
+
+            font-size: 13px;
+
+            margin-top: 14px;
+
+            min-height: 18px;
+        }
+
+
+        /* ================= SUBMIT ================= */
+
+        .submit-row {
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-top: 22px;
+        }
+
+        .detect-button {
+            border: none;
+
+            background: #69f0ae;
+
+            color: #07100d;
+
+            padding: 14px 24px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .detect-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(105,240,174,0.15);
+        }
+
+
+        /* ================= ERROR ================= */
+
+        .error {
+            background: rgba(255,70,70,0.08);
+
+            border: 1px solid rgba(255,70,70,0.25);
+
+            color: #ff8585;
+
+            padding: 16px;
+
+            border-radius: 9px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= RESULTS ================= */
+
+        .result-section {
+            margin-top: 50px;
+        }
+
+        .result-heading {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-end;
+
+            margin-bottom: 24px;
+        }
+
+        .result-heading span {
+            color: #69f0ae;
+
+            font-size: 11px;
+
+            letter-spacing: 1.5px;
+        }
+
+        .result-heading h2 {
+            font-size: 34px;
+
+            margin-top: 8px;
+        }
+
+        .result-status {
+            color: #69f0ae;
+
+            font-size: 12px;
+
+            padding: 8px 14px;
+
+            border: 1px solid rgba(105,240,174,0.2);
+
+            border-radius: 20px;
+        }
+
+
+        /* ================= IMAGE GRID ================= */
+
+        .image-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 24px;
+        }
+
+        .image-card {
+            background: #101a16;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 15px;
+
+            padding: 17px;
+        }
+
+        .image-card-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 14px;
+        }
+
+        .image-card-header h3 {
+            font-size: 15px;
+        }
+
+        .image-label {
+            color: #6f7d76;
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+        }
+
+        .image-card img {
+            width: 100%;
+
+            max-height: 500px;
+
+            object-fit: contain;
+
+            display: block;
+
+            border-radius: 10px;
+
+            background: #080f0c;
+        }
+
+
+        /* ================= DAMAGE SECTION ================= */
+
+        .damage-section {
+            margin-top: 28px;
+
+            background: #101a16;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            border-radius: 15px;
+
+            padding: 30px;
+        }
+
+        .damage-section h2 {
+            font-size: 25px;
+
+            margin-bottom: 7px;
+        }
+
+        .damage-subtitle {
+            color: #8b9992;
+
+            font-size: 14px;
+
+            margin-bottom: 24px;
+        }
+
+        .damage-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(320px, 1fr));
+
+            gap: 18px;
+        }
+
+
+        /* ================= DAMAGE CARD ================= */
+
+        .damage-card {
+            padding: 24px;
+
+            background: #0b1410;
+
+            border: 1px solid rgba(255,255,255,0.06);
+
+            border-radius: 12px;
+
+            transition: 0.25s;
+        }
+
+        .damage-card:hover {
+            border-color: rgba(105,240,174,0.3);
+
+            transform: translateY(-3px);
+        }
+
+        .damage-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .damage-number {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background: rgba(105,240,174,0.08);
+
+            color: #69f0ae;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .damage-confidence {
+            color: #69f0ae;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+        .damage-name {
+            font-size: 22px;
+
+            font-weight: 700;
+
+            text-transform: capitalize;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* ================= CONFIDENCE ================= */
+
+        .damage-confidence-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 8px;
+
+            color: #8c9993;
+
+            font-size: 13px;
+        }
+
+        .damage-confidence-row strong {
+            color: #69f0ae;
+
+            font-size: 15px;
+        }
+
+        .confidence-bar {
+            height: 7px;
+
+            background: #1d2923;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+
+            background: #69f0ae;
+
+            border-radius: 10px;
+        }
+
+
+        /* ================= SEVERITY ================= */
+
+        .damage-details {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            background: #111c17;
+
+            border: 1px solid rgba(255,255,255,0.05);
+
+            border-radius: 9px;
+
+            padding: 13px;
+        }
+
+        .detail-item span {
+            display: block;
+
+            color: #718079;
+
+            font-size: 11px;
+
+            margin-bottom: 7px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+        }
+
+        .detail-item strong {
+            color: #e8eee9;
+
+            font-size: 15px;
+        }
+
+        .detail-item strong.moderate {
+            color: #f2d66b;
+        }
+
+        .detail-item strong.high {
+            color: #ff9c55;
+        }
+
+        .detail-item strong.critical {
+            color: #ff6868;
+        }
+
+
+        /* ================= RECOMMENDATION ================= */
+
+        .recommendation {
+            margin-top: 15px;
+
+            padding: 15px;
+
+            background: rgba(105,240,174,0.035);
+
+            border-left: 3px solid #69f0ae;
+
+            border-radius: 7px;
+        }
+
+        .recommendation span {
+            display: block;
+
+            color: #69f0ae;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.8px;
+
+            margin-bottom: 7px;
+        }
+
+        .recommendation p {
+            color: #9aa69f;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= NO DAMAGE ================= */
+
+        .no-damage {
+            text-align: center;
+
+            padding: 40px 20px;
+
+            border: 1px solid rgba(105,240,174,0.1);
+
+            border-radius: 12px;
+
+            background: rgba(105,240,174,0.025);
+        }
+
+        .no-damage-icon {
+            font-size: 35px;
+
+            margin-bottom: 12px;
+        }
+
+        .no-damage h3 {
+            font-size: 21px;
+
+            margin-bottom: 7px;
+        }
+
+        .no-damage p {
+            color: #819088;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.07);
+
+            padding: 32px 7%;
+
+            text-align: center;
+
+            color: #68756e;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 850px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 42px;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .nav-button {
+                display: none;
+            }
+
+            .container {
+                padding-top: 40px;
+            }
+
+            .upload-card {
+                padding: 20px;
+            }
+
+            .upload-area {
+                min-height: 220px;
+            }
+
+            .result-heading {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .damage-details {
+                grid-template-columns: 1fr;
+            }
+
+            .damage-name {
+                font-size: 19px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <a href="/" class="logo">
+        ◈ RoadGuard <span>AI</span>
+    </a>
+
+    <div class="nav-links">
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/detect" class="active">
+            AI Inspection
+        </a>
+
+        <!-- FIXED: actual reports route -->
+        <a href="/reports">
+            Reports
+        </a>
+
+        <a href="/#about">
+            About
+        </a>
+
+    </div>
+
+    <a href="/" class="nav-button">
+        ← Home
+    </a>
+
+</nav>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <div class="page-header">
+
+        <span class="page-tag">
+            AI ROAD INSPECTION
+        </span>
+
+        <h1>
+            Detect Road Damage
+            <span>with AI.</span>
+        </h1>
+
+        <p>
+            Upload a road image and let RoadGuard AI identify
+            cracks, potholes and other road surface damages.
+        </p>
+
+    </div>
+
+
+    <!-- ================= UPLOAD ================= -->
+
+    <div class="upload-card">
+
+        {% if error %}
+
+        <div class="error">
+            ⚠ {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <form
+            action="/detect"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <label
+                for="imageInput"
+                class="upload-area"
+            >
+
+                <div class="upload-icon">
+                    ↑
+                </div>
+
+                <h2>
+                    Upload Road Image
+                </h2>
+
+                <p>
+                    Select a JPG, JPEG or PNG image
+                    of a road surface.
+                </p>
+
+                <span class="choose-button">
+                    Choose Image
+                </span>
+
+                <input
+                    id="imageInput"
+                    class="file-input"
+                    type="file"
+                    name="image"
+                    accept=".jpg,.jpeg,.png"
+                    required
+                >
+
+                <div
+                    id="fileName"
+                    class="file-name"
+                ></div>
+
+            </label>
+
+
+            <div class="submit-row">
+
+                <button
+                    type="submit"
+                    class="detect-button"
+                >
+                    🔍 Analyze Road Image
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ================= RESULTS ================= -->
+
+    {% if uploaded_image %}
+
+    <section class="result-section">
+
+
+        <div class="result-heading">
+
+            <div>
+
+                <span>
+                    INSPECTION COMPLETE
+                </span>
+
+                <h2>
+                    Detection Results
+                </h2>
+
+            </div>
+
+            <div class="result-status">
+                ✓ AI Analysis Completed
+            </div>
+
+        </div>
+
+
+        <!-- ================= IMAGES ================= -->
+
+        <div class="image-grid">
+
+
+            <div class="image-card">
+
+                <div class="image-card-header">
+
+                    <h3>
+                        Original Image
+                    </h3>
+
+                    <span class="image-label">
+                        INPUT
+                    </span>
+
+                </div>
+
+                <img
+                    src="{{ uploaded_image }}"
+                    alt="Original road image"
+                >
+
+            </div>
+
+
+            <div class="image-card">
+
+                <div class="image-card-header">
+
+                    <h3>
+                        AI Detection
+                    </h3>
+
+                    <span class="image-label">
+                        YOLO OUTPUT
+                    </span>
+
+                </div>
+
+                <img
+                    src="{{ result_image }}"
+                    alt="AI detection result"
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= DAMAGE RESULTS ================= -->
+
+        <div class="damage-section">
+
+            <h2>
+                Detected Damage
+            </h2>
+
+            <p class="damage-subtitle">
+                Road damage identified by the trained AI model.
+            </p>
+
+
+            {% if detections %}
+
+            <div class="damage-grid">
+
+
+                {% for item in detections %}
+
+                <div class="damage-card">
+
+
+                    <div class="damage-top">
+
+                        <div class="damage-number">
+                            {{ loop.index }}
+                        </div>
+
+                        <div class="damage-confidence">
+                            {{ item.confidence }}%
+                        </div>
+
+                    </div>
+
+
+                    <div class="damage-name">
+                        {{ item.class }}
+                    </div>
+
+
+                    <div class="damage-confidence-row">
+
+                        <span>
+                            Confidence
+                        </span>
+
+                        <strong>
+                            {{ item.confidence }}%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="confidence-bar">
+
+                        <div
+                            class="confidence-fill"
+                            style="width: {{ item.confidence }}%;"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="damage-details">
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Severity
+                            </span>
+
+                            <strong
+                                class="
+                                {% if item.severity == 'Critical' %}
+                                    critical
+                                {% elif item.severity == 'High' %}
+                                    high
+                                {% else %}
+                                    moderate
+                                {% endif %}
+                                "
+                            >
+
+                                {% if item.severity == 'Critical' %}
+                                    🔴
+                                {% elif item.severity == 'High' %}
+                                    🟠
+                                {% else %}
+                                    🟡
+                                {% endif %}
+
+                                {{ item.severity }}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Priority
+                            </span>
+
+                            <strong>
+                                {{ item.priority }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="recommendation">
+
+                        <span>
+                            RECOMMENDED ACTION
+                        </span>
+
+                        <p>
+                            {{ item.recommendation }}
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+
+
+            {% else %}
+
+
+            <div class="no-damage">
+
+                <div class="no-damage-icon">
+                    ✓
+                </div>
+
+                <h3>
+                    No Road Damage Detected
+                </h3>
+
+                <p>
+                    The AI model did not identify
+                    any road damage in this image.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    </section>
+
+    {% endif %}
+
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    RoadGuard AI · AI-powered road damage inspection
+
+</footer>
+
+
+<script>
+
+    const imageInput =
+        document.getElementById("imageInput");
+
+    const fileName =
+        document.getElementById("fileName");
+
+
+    imageInput.addEventListener(
+        "change",
+        function () {
+
+            if (
+                this.files &&
+                this.files.length > 0
+            ) {
+
+                fileName.textContent =
+                    "Selected: " +
+                    this.files[0].name;
+
+            } else {
+
+                fileName.textContent = "";
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
+```
